@@ -13,8 +13,22 @@ def ler_csv(nome_do_arquivo_csv: str) -> list[dict]:
             lista.append(linha)
     return lista
 
-vendas_itens: list[dict]
+def filtrar_produtos_nao_entregues(lista: list[dict]) -> list[dict]:
+    """
+    Funcao que filtra produtos onde entrega = True
+    """
+    lista_com_produtos_filtrados = []
+    for produto in lista:
+        if produto.get("entregue") == "True":
+            lista_com_produtos_filtrados.append(produto)
+    return lista_com_produtos_filtrados
 
-vendas_itens = ler_csv(path_arquivo)
+def somar_valores_dos_produtos(lista_com_produtos_filtrados: list[dict]) -> int:
+    """
+    Soma todos os produtos da lista
+    """
+    valor_total = 0
+    for produto in lista_com_produtos_filtrados:
+        valor_total += int(produto.get("price"))
+    return valor_total
 
-print(vendas_itens)
